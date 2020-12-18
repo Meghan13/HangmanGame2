@@ -1,6 +1,7 @@
 import pygame
 import gallows
 import constants
+import text_input
 
 pygame.init()
 
@@ -19,6 +20,7 @@ clock = pygame.time.Clock()
 screen.fill(pygame.Color(constants.BLACK))
 
 
+
 def dashes_for_word(word):
     start = (200, 320)
     space = 100
@@ -27,7 +29,7 @@ def dashes_for_word(word):
         start = (start[0] + space, start[1])
 
 
-def score(wins,losses):
+def score(wins, losses):
     font2 = pygame.font.Font("ALGER.TTF", 18)
     player_score = font2.render("Wins & Losses", True, constants.WHITE, constants.DARK_BROWN)
     player_score_rect = player_score.get_rect()
@@ -39,8 +41,7 @@ def letters_guessed(player_guess):
     title_pos = (700, 50)
     font2 = pygame.font.Font("ALGER.TTF", 18)
     # Title
-    letters_title = font2.render("Letters Guessed", True, constants.WHITE,
-                                          constants.DARK_BROWN)
+    letters_title = font2.render("Letters Guessed", True, constants.WHITE, constants.DARK_BROWN)
     letters_title_rect = letters_title.get_rect()
     letters_title_rect.center = title_pos
 
@@ -58,6 +59,7 @@ def letters_guessed(player_guess):
 running = True
 
 gallows = gallows.Gallows()
+text_input = text_input.TextInput(screen)
 
 while running:
 
@@ -70,8 +72,13 @@ while running:
             sys.exit()
         gallows.draw(screen)
 
+        player_guess = "a"
+
         dashes_for_word("Hello")
         score(1, 1)
-        letters_guessed("a")
-
+        letters_guessed(player_guess)
         pygame.display.update()
+
+    text_input.update(events)
+    pygame.display.update()
+    clock.tick(30)
