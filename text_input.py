@@ -43,6 +43,8 @@ class TextInput:
             # Handles entry of user_guess upon pressing enter/return key
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.text_input_is_active:
                 self.user_guess = self.textinput.input_string
+                self.textinput.input_string = ""
+                self.textinput.update(events)
 
         if self.text_input_is_active:
             self.textinput.update(events)

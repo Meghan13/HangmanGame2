@@ -2,6 +2,7 @@ import pygame
 import gallows
 import constants
 import text_input
+import random
 
 pygame.init()
 
@@ -9,22 +10,37 @@ pygame.init()
 WIDTH = 900
 HEIGHT = 600
 
-#Welcome Title
+#Title Screen
 font = pygame.font.Font("ALGER.TTF", 32)
-TITLE = font.render("Welcome to Hangman!", True, constants.WHITE, constants.DARK_BROWN)
-text_rect = TITLE.get_rect()
+title = font.render("Welcome to Hangman!", True, constants.WHITE, constants.DARK_BROWN)
+text_rect = title.get_rect()
 text_rect.center = (450, 50)
+enter_letter = font.render("Please Enter a Letter", True, constants.WHITE, constants.BLACK)
+enter_letter_rect = enter_letter.get_rect()
+enter_letter_rect.center = (450, 400)
 
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
 clock = pygame.time.Clock()
 screen.fill(pygame.Color(constants.BLACK))
+
+words = []
+
+def build_word_list():
+    word_bank = open("word_bank.txt", "r")
+    for line in word_bank:
+        if line != "" and [0] != '#':
+            words.append(line)
+
+def get_random_word():
+    word = random.choice(words)
+    return word
 
 
 
 def dashes_for_word(word):
     start = (200, 320)
     space = 100
-    for element in range (0, len(word)):
+    for element in range (0, len(word)-1):
         pygame.draw.line(screen, pygame.Color(constants.WHITE), start, (start[0] + 50, start[1]), 2)
         start = (start[0] + space, start[1])
 
@@ -60,10 +76,15 @@ running = True
 
 gallows = gallows.Gallows()
 text_input = text_input.TextInput(screen)
+build_word_list()
+random_word = get_random_word()
+dashes_for_word(random_word)
+print(random_word)
 
 while running:
 
-    screen.blit(TITLE, text_rect)
+    screen.blit(title, text_rect)
+    screen.blit(enter_letter, enter_letter_rect)
     events = pygame.event.get()
 
     for event in events:
@@ -74,11 +95,11 @@ while running:
 
         player_guess = "a"
 
-        dashes_for_word("Hello")
         score(1, 1)
         letters_guessed(player_guess)
         pygame.display.update()
 
     text_input.update(events)
     pygame.display.update()
+    # print(text_input.user_guess)  # Debugging user entry
     clock.tick(30)
