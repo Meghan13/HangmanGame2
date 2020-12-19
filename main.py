@@ -28,12 +28,12 @@ words = []
 def build_word_list():
     word_bank = open("word_bank.txt", "r")
     for line in word_bank:
-        if line != "" and [0] != '#':
+        if line != "" and line[0] != '#':
             words.append(line)
 
 def get_random_word():
     word = random.choice(words)
-    return word
+    return word.upper()
 
 
 
@@ -56,7 +56,7 @@ def score(wins, losses):
     screen.blit(player_score, player_score_rect.center)
 
 
-def letters_guessed(player_guess):
+def letters_guessed(player_guess, random_word, wrong_letters):
     title_pos = (700, 50)
     font2 = pygame.font.Font("ALGER.TTF", 18)
     # Title
@@ -64,14 +64,23 @@ def letters_guessed(player_guess):
     letters_title_rect = letters_title.get_rect()
     letters_title_rect.center = title_pos
 
-    # Guessed Letters
-    player_letters_guessed = font2.render(player_guess, True, constants.WHITE, constants.BLACK)
-    letters_guessed_rect = player_letters_guessed.get_rect()
-    letters_guessed_rect.center = (title_pos[0], title_pos[1] + 50)
+    if player_guess in random_word:
+        pass # TODO: Add letters to dashes
 
-    # Display
+    elif player_guess in wrong_letters:
+        pass
+
+    else:
+        wrong_letters.append(player_guess)
+
+        # Guessed Wrong Letters
+        player_letters_guessed = font2.render(str(wrong_letters), True, constants.WHITE, constants.BLACK)
+        letters_guessed_rect = player_letters_guessed.get_rect()
+        letters_guessed_rect.center = (title_pos[0], title_pos[1] + 50)
+        # Display
+        screen.blit(player_letters_guessed, letters_guessed_rect.center)
+
     screen.blit(letters_title, letters_title_rect.center)
-    screen.blit(player_letters_guessed, letters_guessed_rect.center)
 
 
 # Script is running
@@ -83,6 +92,8 @@ build_word_list()
 random_word = get_random_word()
 dashes_for_word(random_word)
 print(random_word)
+wrong_letters = []
+guess_made = False
 
 while running:
 
@@ -95,12 +106,14 @@ while running:
             pygame.QUIT
             sys.exit()
         gallows.draw(screen)
-
-        player_guess = "a"
-
         score(1, 1)
-        letters_guessed(player_guess)
+
         pygame.display.update()
+
+    if text_input.guess_made:
+        letters_guessed(text_input.user_guess, random_word, wrong_letters)
+        text_input.guess_made = False
+        text_input.textinput.input_string = ""
 
     text_input.update(events)
     pygame.display.update()

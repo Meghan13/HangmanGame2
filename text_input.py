@@ -10,6 +10,7 @@ class TextInput:
     input_box_pos = (400, 450)
     box_height = 50
     box_width = 50
+    guess_made = False
 
     def __init__(self, screen, new_text_color = text_color, new_input_box_pos = input_box_pos, new_box_height = box_height,
                  new_box_width = box_width):
@@ -43,6 +44,7 @@ class TextInput:
             # Handles entry of user_guess upon pressing enter/return key
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and self.text_input_is_active:
                 self.user_guess = self.textinput.input_string
+                self.guess_made = True
                 self.textinput.input_string = ""
                 self.textinput.update(events)
 
