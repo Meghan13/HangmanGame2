@@ -38,7 +38,10 @@ def get_random_word():
 
 
 def dashes_for_word(word):
-    start = (200, 320)
+    if len(word) > 6:
+        start = (150, 320)
+    else:
+        start = (250, 320)
     space = 100
     for element in range (0, len(word)-1):
         pygame.draw.line(screen, pygame.Color(constants.WHITE), start, (start[0] + 50, start[1]), 2)

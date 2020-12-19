@@ -1,5 +1,6 @@
 #txt file from deekayen/1-1000.txt
 #https://gist.github.com/deekayen/4148741
+#TODO: (Stretch goal)Turn commented out words into hard mode
 
 the
 of
@@ -242,7 +243,6 @@ draw
 left
 late
 run
-don't
 while
 press
 close
@@ -538,7 +538,7 @@ count
 square
 reason
 length
-represent
+#represent
 art
 subject
 region
@@ -575,7 +575,7 @@ winter
 sat
 written
 wild
-instrument
+#instrument
 kept
 glass
 grass
@@ -613,7 +613,7 @@ metal
 whether
 push
 seven
-paragraph
+#paragraph
 third
 shall
 held
@@ -640,7 +640,7 @@ tall
 sand
 soil
 roll
-temperature
+#temperature
 finger
 industry
 value
@@ -667,9 +667,9 @@ spring
 observe
 child
 straight
-consonant
+#consonant
 nation
-dictionary
+#dictionary
 milk
 speed
 method
@@ -688,7 +688,7 @@ cool
 design
 poor
 lot
-experiment
+#experiment
 bottom
 key
 iron
@@ -756,7 +756,7 @@ woman
 captain
 practice
 separate
-difficult
+#difficult
 doctor
 please
 protect
@@ -764,7 +764,7 @@ noon
 whose
 locate
 ring
-character
+#character
 insect
 caught
 period
@@ -792,7 +792,6 @@ provide
 agree
 thus
 capital
-won't
 chair
 danger
 fruit
@@ -802,7 +801,7 @@ soldier
 process
 operate
 guess
-necessary
+#necessary
 sharp
 wing
 create
@@ -859,7 +858,7 @@ success
 company
 subtract
 event
-particular
+#particular
 deal
 swim
 term
@@ -873,7 +872,7 @@ camp
 invent
 cotton
 born
-determine
+#determine
 quart
 nine
 truck
@@ -900,7 +899,7 @@ nose
 plural
 anger
 claim
-continent
+#continent
 oxygen
 sugar
 death
@@ -915,7 +914,7 @@ thank
 branch
 match
 suffix
-especially
+#especially
 fig
 afraid
 huge
@@ -925,7 +924,7 @@ discuss
 forward
 similar
 guide
-experience
+#experience
 score
 apple
 bought
@@ -940,7 +939,7 @@ slip
 win
 dream
 evening
-condition
+#condition
 feed
 tool
 total
@@ -957,7 +956,7 @@ parent
 shore
 division
 sheet
-substance
+#substance
 favor
 connect
 post
