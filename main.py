@@ -38,12 +38,15 @@ def get_random_word():
 
 
 def dashes_for_word(word):
-    if len(word) > 6:
+    if len(word) >= 8:
+        start = (80, 320)
+    elif 6 < len(word) < 8:
         start = (150, 320)
     else:
         start = (250, 320)
+
     space = 100
-    for element in range (0, len(word)-1):
+    for element in range (0, len(word)):
         pygame.draw.line(screen, pygame.Color(constants.WHITE), start, (start[0] + 50, start[1]), 2)
         start = (start[0] + space, start[1])
 
@@ -63,6 +66,7 @@ def letters_guessed(player_guess, random_word, wrong_letters):
     letters_title = font2.render("Letters Guessed", True, constants.WHITE, constants.DARK_BROWN)
     letters_title_rect = letters_title.get_rect()
     letters_title_rect.center = title_pos
+    wrong_letters_to_print = ""
 
     if player_guess in random_word:
         pass # TODO: Add letters to dashes
@@ -72,9 +76,12 @@ def letters_guessed(player_guess, random_word, wrong_letters):
 
     else:
         wrong_letters.append(player_guess)
+        for place in range(len(wrong_letters)):
+            # TODO: fencepost case. When max wrong guesses don't add extra space
+            wrong_letters_to_print = wrong_letters_to_print + wrong_letters[place] + " "
 
         # Guessed Wrong Letters
-        player_letters_guessed = font2.render(str(wrong_letters), True, constants.WHITE, constants.BLACK)
+        player_letters_guessed = font2.render(str(wrong_letters_to_print), True, constants.WHITE, constants.BLACK)
         letters_guessed_rect = player_letters_guessed.get_rect()
         letters_guessed_rect.center = (title_pos[0], title_pos[1] + 50)
         # Display
