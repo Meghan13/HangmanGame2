@@ -24,17 +24,21 @@ clock = pygame.time.Clock()
 screen.fill(pygame.Color(constants.BLACK))
 
 words = []
+# Dictionary with letter of word as key, and position in the word as array of values (handle multiples of letters).
+word_dashes = {}
+
 
 def build_word_list():
     word_bank = open("word_bank.txt", "r")
     for line in word_bank:
         if line != "" and line[0] != '#':
+            line = line.strip()
             words.append(line)
 
 def get_random_word():
     word = random.choice(words)
+    # word = "shell"
     return word.upper()
-
 
 
 def dashes_for_word(word):
@@ -46,8 +50,12 @@ def dashes_for_word(word):
         start = (250, 320)
 
     space = 100
-    for element in range (0, len(word)):
-        pygame.draw.line(screen, pygame.Color(constants.WHITE), start, (start[0] + 50, start[1]), 2)
+
+    for element in range(len(word)):
+        word_dashes[word[element]] = []
+    for element in range (len(word)):
+        word_dashes[word[element]].append(pygame.draw.line(screen, pygame.Color(constants.WHITE), start, (start[0] + 50, start[1]), 2))
+        # print(word_dashes)
         start = (start[0] + space, start[1])
 
 
@@ -61,15 +69,39 @@ def score(wins, losses):
 
 def letters_guessed(player_guess, random_word, wrong_letters):
     title_pos = (700, 50)
-    font2 = pygame.font.Font("ALGER.TTF", 18)
+    wrong_letters_font = pygame.font.Font("ALGER.TTF", 18)
+    correct_letters_font = pygame.font.Font("ALGER.TTF", 40)
     # Title
-    letters_title = font2.render("Letters Guessed", True, constants.WHITE, constants.DARK_BROWN)
+    letters_title = wrong_letters_font.render("Letters Guessed", True, constants.WHITE, constants.DARK_BROWN)
     letters_title_rect = letters_title.get_rect()
     letters_title_rect.center = title_pos
     wrong_letters_to_print = ""
+    correct_letter_pos = ()
+    correct_multi_letters_pos = []
 
     if player_guess in random_word:
-        pass # TODO: Add letters to dashes
+        # TODO: Add letters to dashes
+        # print(word_dashes[player_guess])
+        # Place letter at same location as corresponding dash
+        if len(word_dashes[player_guess]) > 1:
+            for element in range(len(word_dashes[player_guess])):
+                correct_multi_letters_pos.append((word_dashes[player_guess][element][0], word_dashes[player_guess][element][1]))
+            for element in range(len(correct_multi_letters_pos)):
+                correct_letters_to_print = correct_letters_font.render(player_guess, True, constants.WHITE, constants.BLACK)
+                correct_letters_display = correct_letters_to_print.get_rect()
+                correct_letters_display.center = correct_multi_letters_pos[element]
+                screen.blit(correct_letters_to_print, correct_letters_display.center)
+                print(correct_multi_letters_pos[element])
+
+
+        else:
+            correct_letter_pos = (word_dashes[player_guess][0][0], word_dashes[player_guess][0][1])
+            correct_letter_to_print = correct_letters_font.render(player_guess, True, constants.WHITE, constants.BLACK)
+            correct_letter_display = correct_letter_to_print.get_rect()
+            correct_letter_display.center = correct_letter_pos
+            screen.blit(correct_letter_to_print, correct_letter_display.center)
+        # print(correct_letter_pos)
+        # print(correct_multi_letters_pos)
 
     elif player_guess in wrong_letters:
         pass
@@ -81,7 +113,7 @@ def letters_guessed(player_guess, random_word, wrong_letters):
             wrong_letters_to_print = wrong_letters_to_print + wrong_letters[place] + " "
 
         # Guessed Wrong Letters
-        player_letters_guessed = font2.render(str(wrong_letters_to_print), True, constants.WHITE, constants.BLACK)
+        player_letters_guessed = wrong_letters_font.render(str(wrong_letters_to_print), True, constants.WHITE, constants.BLACK)
         letters_guessed_rect = player_letters_guessed.get_rect()
         letters_guessed_rect.center = (title_pos[0], title_pos[1] + 50)
         # Display
