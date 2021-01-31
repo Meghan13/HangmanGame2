@@ -12,9 +12,14 @@ HEIGHT = 600
 
 #Title Screen
 font = pygame.font.Font("ALGER.TTF", 32)
+wrong_letters_font = pygame.font.Font("ALGER.TTF", 18)
 title = font.render("Welcome to Hangman!", True, constants.WHITE, constants.DARK_BROWN)
 text_rect = title.get_rect()
 text_rect.center = (450, 50)
+letters_title_pos = (700, 50)
+letters_title = wrong_letters_font.render("Letters Guessed", True, constants.WHITE, constants.DARK_BROWN)
+letters_title_rect = letters_title.get_rect()
+letters_title_rect.center = letters_title_pos
 enter_letter = font.render("Please Enter a Letter", True, constants.WHITE, constants.BLACK)
 enter_letter_rect = enter_letter.get_rect()
 enter_letter_rect.center = (450, 400)
@@ -71,10 +76,6 @@ def letters_guessed(player_guess, random_word, wrong_letters):
     title_pos = (700, 50)
     wrong_letters_font = pygame.font.Font("ALGER.TTF", 18)
     correct_letters_font = pygame.font.Font("ALGER.TTF", 40)
-    # Title
-    letters_title = wrong_letters_font.render("Letters Guessed", True, constants.WHITE, constants.DARK_BROWN)
-    letters_title_rect = letters_title.get_rect()
-    letters_title_rect.center = title_pos
     wrong_letters_to_print = ""
     correct_letter_pos = ()
     correct_multi_letters_pos = []
@@ -119,7 +120,6 @@ def letters_guessed(player_guess, random_word, wrong_letters):
         # Display
         screen.blit(player_letters_guessed, letters_guessed_rect.center)
 
-    screen.blit(letters_title, letters_title_rect.center)
 
 
 # Script is running
@@ -136,6 +136,7 @@ guess_made = False
 
 while running:
 
+    screen.blit(letters_title, letters_title_rect.center)
     screen.blit(title, text_rect)
     screen.blit(enter_letter, enter_letter_rect)
     events = pygame.event.get()
